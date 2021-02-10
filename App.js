@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { SafeAreaView, StyleSheet } from 'react-native';
 
 import { createStore, combineReducers } from 'redux';
 import { Provider } from 'react-redux';
@@ -6,13 +7,15 @@ import * as Font from 'expo-font';
 import AppLoading from 'expo-app-loading'
 
 
+import ordersReducer from './store/reducers/orders';
 import productsReducer from './store/reducers/products';
 import ShopNavigator from './navigation/ShopNavigator';
-import CartReducer from './store/reducers/cart';
+import cartReducer from './store/reducers/cart';
 
 const rootReducer = combineReducers({
     products: productsReducer,
-    cart: CartReducer
+    cart: cartReducer,
+    orders: ordersReducer
 });
 
 const store = createStore(rootReducer);
@@ -38,10 +41,16 @@ export default function App() {
   }
 
   return (
-
+    <SafeAreaView style={styles.container}>
     <Provider store={store}>
       <ShopNavigator />
     </Provider>
+    </SafeAreaView>
   );
 }
 
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+});
